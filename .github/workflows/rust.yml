@@ -37,7 +37,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: setup (rustup)
         run: |
-          rustup default ${{ matrix.toolchain }} --target ${{ matrix.target }}
+          rustup default ${{ matrix.toolchain }}
+          rustup target add ${{ matrix.target }}
           rustup update
       - name: setup (cache)
         uses: actions/cache@v4
