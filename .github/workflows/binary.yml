@@ -2,7 +2,7 @@ name: binaries
 
 concurrency: 
   cancel-in-progress: false
-  group: ${{ github.event.repository.name }}-rust
+  group: ${{ github.event.repository.name }}-rust-bin
 
 env:
   CARGO_TERM_COLOR: always
