@@ -30,17 +30,16 @@ jobs:
     strategy:
       matrix:
         platform: [ ubuntu-latest ]
+        target: [ wasm32-unknown-unknown ]
         toolchain: [ stable, nightly ]
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
       - name: setup (rustup)
         run: |
-          rustup default ${{ matrix.toolchain }}
+          rustup default ${{ matrix.toolchain }} --target ${{ matrix.target }}
           rustup update
-      - name: build (workspace)
-        run: cargo build --all-features -r -v --workspace
-      - name: cache
+      - name: setup (cache)
         uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
@@ -48,22 +47,10 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target/release
-  bench:
-    name: Benchmark
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: setup (rustup)
-        run: rustup default nightly && rustup update
-      - name: cargo (bench)
-        run: cargo bench --features full -v --workspace
-  test:
-    name: Test
-    strategy:
-      matrix:
-        toolchain: [ stable, nightly ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: rustup default ${{ matrix.toolchain }} && rustup update
-      - run: cargo test --features full -v --workspace
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+            cargo-
+      - name: build (workspace)
+        run: cargo build --all-features -r -v --workspace
+      - name: test (workspace)
+        run: cargo test --features full -v --workspace

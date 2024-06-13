@@ -1,17 +1,3 @@
-[workspace.package]
-authors = ["Joe McCain III <jo3mccain@icloud.com>",]
-categories = [ ]
-description = "wazm aims to be an efficient virutalized environment orchestrating workloads across various surfaces."
-edition = "2021"
-homepage = "https://github.com/FL03/wazm/wiki"
-keywords = [ ]
-license = "Apache-2.0"
-readme = "README.md"
-repository = "https://github.com/FL03/wazm.git"
-version = "0.0.0"
-
-[workspace.dependencies]
-
 [workspace]
 default-members = [
     "wazm"
@@ -26,6 +12,21 @@ members = [
 ]
 
 resolver = "2"
+
+[workspace.dependencies]
+
+
+[workspace.package]
+authors = ["Joe McCain III <jo3mccain@icloud.com>",]
+categories = [ ]
+description = "wazm aims to be an efficient virutalized environment orchestrating workloads across various surfaces."
+edition = "2021"
+homepage = "https://github.com/FL03/wazm/wiki"
+keywords = [ "toolkit", "wasm" ]
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/FL03/wazm.git"
+version = "0.0.1"
 
 [profile.dev]
 opt-level = 0
