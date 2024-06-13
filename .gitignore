@@ -1,7 +1,7 @@
 # Artifacts
 
-**/.artifacts/data/
-**/.docker/data/
+**/.artifacts/data/*
+**/.docker/data/*
 
 
 ## Caches
@@ -9,20 +9,15 @@
 **/.cache/
 
 # Configuration Files
-**/*.config.*
+**/.config/*
 
 **/*.env
 **/*.env.*
 
 ### Exceptions
-!**/default.config.*
-!**/*.config.cjs
-!**/*.config.js
-!**/*.config.mjs
-!**/config.py
-!**/config.rs
+!**/default.cnf.*
+!**/cli.cnf.*
 
-!**/example.env.*
 !**/*.env.example
 !**/*.env.default
 

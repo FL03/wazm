@@ -7,7 +7,7 @@ edition.workspace = true
 homepage.workspace = true
 keywords.workspace = true
 license.workspace = true
-name = "wazm"
+name = "wazm-core"
 readme.workspace = true
 repository.workspace = true
 version.workspace = true
@@ -23,34 +23,30 @@ full = [
     "serde",
 ]
 
-# ********* [FF] Features *********
-
-# ******* [FF] Dependencies *******
+# [FF] Dependencies
 alloc = [
-    "wazm-core/alloc",
+    "num/alloc",
+    "serde?/alloc",
 ]
 
 rand = [
-    "wazm-core/rand"
+    "num/rand"
 ]
 
 serde = [
-    "wazm-core/serde"
+    "dep:serde"
 ]
 
-# ******* [FF] Environments *******
+# ********* [FF] Environments *********
 std = [
     "alloc",
-    "wazm-core/std",
+    "num/std",
+    "serde?/std",
 ]
 
-wasm = [
-    "wazm-core/wasm",
-]
+wasm = []
 
-wasi = [
-    "wazm-core/wasi",
-]
+wasi = []
 
 [lib]
 bench = true
@@ -63,10 +59,15 @@ test = true
 [dev-dependencies]
 lazy_static = "1"
 
-[dependencies.wazm-core]
+[dependencies.num]
 default-features = false
-path = "../core"
-version = "0.0.1"
+version = "0.4"
+
+[dependencies.serde]
+default-features = false
+features = ["derive"]
+optional = true
+version = "1"
 
 [package.metadata.docs.rs]
 all-features = true

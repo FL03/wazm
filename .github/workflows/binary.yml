@@ -26,11 +26,10 @@ permissions: write-all
 
 jobs:
   build:
-    name: Build
+    name: Build (cli)
     strategy:
       matrix:
         platform: [ ubuntu-latest ]
-        target: [ wasm32-unknown-unknown ]
         toolchain: [ stable, nightly ]
     runs-on: ${{ matrix.platform }}
     steps:
@@ -38,20 +37,22 @@ jobs:
       - name: setup (rustup)
         run: |
           rustup default ${{ matrix.toolchain }}
-          rustup target add ${{ matrix.target }}
           rustup update
       - name: setup (cache)
         uses: actions/cache@v4
         with:
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: bin-${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           path: |
             ~/.cargo/registry
             ~/.cargo/git
             target/debug
             target/release
-            target/wasm32-unknown-unknown/debug
           restore-keys: |
-            ${{ runner.os }}-cargo-
-            cargo-
-      - name: build sdk
-        run: cargo build --all-features -p ${{ github.event.repository.name }} -r -v --target ${{ matrix.target }}
+            bin-${{ runner.os }}-cargo-
+            bin-cargo-
+      - name: build (cli)
+        run: |
+          cargo build --all-features -p wazm-cli -r -v
+          cp target/debug/waz waz
+      - name: dry-run (cli)
+        run: waz --version

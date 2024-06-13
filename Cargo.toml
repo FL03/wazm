@@ -8,13 +8,19 @@ exclude = [
 ]
 
 members = [
+    "core",
     "wazm",
+    "bin/cli",
 ]
 
 resolver = "2"
 
 [workspace.dependencies]
-
+anyhow = "1"
+serde = { default-features = false, features = ["derive"], version = "1" }
+serde_json = "1"
+strum = { default-features = false, features = ["derive"], version = "0.26" }
+smart-default = "0.7"
 
 [workspace.package]
 authors = ["Joe McCain III <jo3mccain@icloud.com>",]
