@@ -53,6 +53,6 @@ jobs:
       - name: build (cli)
         run: |
           cargo build --all-features -p wazm-cli -r -v
-          cp target/debug/waz waz
+          cp target/release/waz waz
       - name: dry-run (cli)
         run: waz --version
