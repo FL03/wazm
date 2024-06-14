@@ -46,6 +46,10 @@ pub enum PlatformOpts {
         #[clap(long, short)]
         target: Option<String>,
     },
+    Register {
+        #[clap(long, short)]
+        name: String,
+    },
 }
 
 impl PlatformOpts {

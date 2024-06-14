@@ -19,4 +19,5 @@ pub(crate) fn tracer() {
         .with_max_level(Level::TRACE)
         .with_target(true)
         .init();
+    tracing::info!("Successfully initialized the tracers...");
 }

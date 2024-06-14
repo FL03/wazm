@@ -2,13 +2,17 @@
     Appellation: build <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use clap::{Parser, Subcommand};
-use serde::{Deserialize, Serialize};
-use smart_default::SmartDefault;
-use strum::{Display, EnumCount, EnumIs, EnumIter};
-
 #[derive(
-    Clone, Debug, Default, Deserialize, Eq, Hash, Ord, Parser, PartialEq, PartialOrd, Serialize,
+    Clone,
+    Debug,
+    Eq,
+    Hash,
+    Ord,
+    PartialEq,
+    PartialOrd,
+    clap::Parser,
+    serde::Deserialize,
+    serde::Serialize,
 )]
 pub struct DeployCmd {
     #[clap(subcommand)]
@@ -24,26 +28,48 @@ pub struct DeployCmd {
 #[derive(
     Clone,
     Debug,
-    Deserialize,
-    Display,
-    EnumCount,
-    EnumIs,
-    EnumIter,
     Eq,
     Hash,
     Ord,
     PartialEq,
     PartialOrd,
-    Serialize,
-    SmartDefault,
-    Subcommand,
+    clap::Subcommand,
+    serde::Deserialize,
+    serde::Serialize,
+    strum::AsRefStr,
+    strum::Display,
+    strum::EnumCount,
+    strum::EnumIs,
+    strum::EnumString,
+    strum::EnumIter,
 )]
 #[serde(rename_all = "lowercase")]
 #[strum(serialize_all = "lowercase")]
 pub enum DeployOpts {
-    #[default]
     Web {
         #[clap(long, short)]
         url: String,
     },
+}
+
+/*
+ ************* Implementations *************
+*/
+
+impl Default for DeployCmd {
+    fn default() -> Self {
+        Self {
+            args: None,
+            artifacts: ".artifacts".to_string(),
+            context: None,
+            workdir: ".".to_string(),
+        }
+    }
+}
+impl Default for DeployOpts {
+    fn default() -> Self {
+        Self::Web {
+            url: "https://localhost:8080".to_string(),
+        }
+    }
 }

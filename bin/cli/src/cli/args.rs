@@ -45,3 +45,45 @@ pub enum Options {
     Platform(PlatformCmd),
     Sys(SystemCmd),
 }
+
+impl Options {
+    pub fn from_build(cmd: BuildCmd) -> Self {
+        Self::Build(cmd)
+    }
+
+    pub fn from_deploy(cmd: DeployCmd) -> Self {
+        Self::Deploy(cmd)
+    }
+
+    pub fn from_platform(cmd: PlatformCmd) -> Self {
+        Self::Platform(cmd)
+    }
+
+    pub fn from_sys(cmd: SystemCmd) -> Self {
+        Self::Sys(cmd)
+    }
+}
+
+/*
+ ************* Implementations *************
+*/
+
+macro_rules! impl_from {
+    ($($variant:ident($cmd:ty)),* $(,)?) =>  {
+        $(impl_from!(@impl $variant($cmd));)*
+    };
+    (@impl $variant:ident($cmd:ty)) => {
+        impl From<$cmd> for Options {
+            fn from(cmd: $cmd) -> Self {
+                Self::$variant(cmd)
+            }
+        }
+    };
+}
+
+impl_from! {
+    Build(BuildCmd),
+    Deploy(DeployCmd),
+    Platform(PlatformCmd),
+    Sys(SystemCmd),
+}

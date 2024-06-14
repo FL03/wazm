@@ -39,8 +39,9 @@ impl CLI {
             verbose: false,
         }
     }
-
+    #[tracing::instrument(level = "debug", skip_all, name = "parse", target = "waz")]
     pub fn parse() -> Self {
+        tracing::trace!("Parsing the CLI arguments...");
         <Self as clap::Parser>::parse()
     }
 

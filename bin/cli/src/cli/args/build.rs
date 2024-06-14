@@ -2,13 +2,19 @@
     Appellation: build <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use clap::{Parser, Subcommand};
-use serde::{Deserialize, Serialize};
-use smart_default::SmartDefault;
-use strum::{Display, EnumCount, EnumIs, EnumIter};
 
 #[derive(
-    Clone, Debug, Default, Deserialize, Eq, Hash, Ord, Parser, PartialEq, PartialOrd, Serialize,
+    Clone,
+    Debug,
+    Default,
+    Eq,
+    Hash,
+    Ord,
+    PartialEq,
+    PartialOrd,
+    clap::Parser,
+    serde::Deserialize,
+    serde::Serialize,
 )]
 pub struct BuildCmd {
     #[clap(subcommand)]
@@ -17,6 +23,8 @@ pub struct BuildCmd {
     pub artifacts: String,
     #[clap(long, short)]
     pub context: Option<String>,
+    #[arg(action = clap::ArgAction::SetTrue, long, short)]
+    pub release: bool,
     #[clap(long, short, default_value = ".")]
     pub workdir: String,
 }
@@ -24,24 +32,24 @@ pub struct BuildCmd {
 #[derive(
     Clone,
     Debug,
-    Deserialize,
-    Display,
-    EnumCount,
-    EnumIs,
-    EnumIter,
     Eq,
     Hash,
     Ord,
     PartialEq,
     PartialOrd,
-    Serialize,
-    SmartDefault,
-    Subcommand,
+    clap::Subcommand,
+    serde::Deserialize,
+    serde::Serialize,
+    strum::AsRefStr,
+    strum::Display,
+    strum::EnumCount,
+    strum::EnumIs,
+    strum::EnumString,
+    strum::EnumIter,
 )]
 #[serde(rename_all = "lowercase")]
 #[strum(serialize_all = "lowercase")]
 pub enum BuildOpts {
-    #[default]
     Binary {
         #[clap(long, short)]
         target: Option<String>,
